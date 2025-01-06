@@ -16,7 +16,7 @@ class PlayState extends FlxState
 	override public function create()
 	{
 		DEBUG_TEXT = new FlxText(8,8,0,"TICK: 0\nTPS: 0", 16);
-		DEBUG_TEXT.visible = false;
+		DEBUG_TEXT.visible = DEBUG_MODE;
 		add(DEBUG_TEXT);
 
 		TPS_Timer();
