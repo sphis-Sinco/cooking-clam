@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.text.FlxText;
+import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
@@ -16,6 +17,8 @@ class PlayState extends FlxState
 	public var DEBUG_MODE:Bool = false;
 
 	public var PLAYER:FlxSprite;
+
+	public var SHOP_BUTTON:FlxButton;
 
 	override public function create()
 	{
@@ -54,6 +57,16 @@ class PlayState extends FlxState
 		PLAYER.y += PLAYER.height / 2;
 
 		add(PLAYER);
+
+		SHOP_BUTTON = new FlxButton(FlxG.width, 5, "Shop", shopfunction);
+		SHOP_BUTTON.x = FlxG.width - SHOP_BUTTON.width - 5;
+
+		add(SHOP_BUTTON);
+	}
+
+	public function shopfunction()
+	{
+		FlxG.switchState(new ShopState());
 	}
 
 	override public function update(elapsed:Float)
