@@ -15,13 +15,27 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
+		initalizeDebugObjects();
+
+		super.create();
+	}
+
+	public function initalizeDebugObjects()
+	{
 		DEBUG_TEXT = new FlxText(8,8,0,"TICK: 0\nTPS: 0", 16);
 		DEBUG_TEXT.visible = DEBUG_MODE;
 		add(DEBUG_TEXT);
 
 		TPS_Timer();
+	}
 
-		super.create();
+	public function TPS_Timer()
+	{
+		var originalTick:Int = TICK;
+		FlxTimer.wait(1, () -> {
+			TPS = TICK - originalTick;
+			TPS_Timer();
+		});
 	}
 
 	override public function update(elapsed:Float)
@@ -38,14 +52,5 @@ class PlayState extends FlxState
 		if (FlxG.keys.justReleased.F3) DEBUG_MODE = !DEBUG_MODE;
 
 		super.update(elapsed);
-	}
-
-	public function TPS_Timer()
-	{
-		var originalTick:Int = TICK;
-		FlxTimer.wait(1, () -> {
-			TPS = TICK - originalTick;
-			TPS_Timer();
-		});
 	}
 }
