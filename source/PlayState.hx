@@ -22,7 +22,7 @@ class PlayState extends FlxState
 
 	public function initalizeDebugObjects()
 	{
-		DEBUG_TEXT = new FlxText(8,8,0,"TICK: 0\nTPS: 0", 16);
+		DEBUG_TEXT = new FlxText(8,8,0,"", 16);
 		DEBUG_TEXT.visible = DEBUG_MODE;
 		add(DEBUG_TEXT);
 
@@ -42,14 +42,15 @@ class PlayState extends FlxState
 	{
 		TICK++;
 
-		// should not update it if it's not visible
-		if (DEBUG_TEXT.visible) DEBUG_TEXT.text = 'TICK: $TICK\nTPS: $TPS';
-
-		// DEBUG_MODE is basically the toggle for DEBUG_TEXT's visibility
-		if (DEBUG_TEXT.visible != DEBUG_MODE) DEBUG_TEXT.visible = DEBUG_MODE;
-
 		// !DEBUG_MODE is the opposite of DEBUG_MODE so DEBUG_MODE = !DEBUG_MODE will flip the value
 		if (FlxG.keys.justReleased.F3) DEBUG_MODE = !DEBUG_MODE;
+
+		// DEBUG_MODE is basically the toggle for DEBUG_TEXT's visibility
+		// put it below "keys.justReleased.F3" incase DEBUG_MODE got swapped
+		if (DEBUG_TEXT.visible != DEBUG_MODE) DEBUG_TEXT.visible = DEBUG_MODE;
+
+		// should not update it if it's not visible
+		if (DEBUG_TEXT.visible) DEBUG_TEXT.text = 'TICK: $TICK\nTPS: $TPS';
 
 		super.update(elapsed);
 	}
