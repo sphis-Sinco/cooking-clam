@@ -19,11 +19,16 @@ class PlayState extends FlxState
 	public var PLAYER:FlxSprite;
 
 	public var SHOP_BUTTON:FlxButton;
+	public var IN_SHOP:Bool = false;
+
+	public static var GAMEPLAY_INSTANCE:PlayState;
 
 	override public function create()
 	{
 		initalizeDebugObjects();
 		initalizeGameplayObjects();
+
+		GAMEPLAY_INSTANCE = this;
 
 		super.create();
 	}
@@ -66,8 +71,19 @@ class PlayState extends FlxState
 
 	public function shopfunction()
 	{
-		FlxG.switchState(new ShopState());
+		if (IN_SHOP) return;
+
+		openSubState(new ShopSubState());
+		IN_SHOP = true;
 	}
+
+	public function kitchenFunction()
+		{
+			if (!IN_SHOP) return;
+			
+			closeSubState();
+			IN_SHOP = false;
+		}
 
 	override public function update(elapsed:Float)
 	{
