@@ -1,8 +1,10 @@
 package;
 
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.text.FlxText;
+import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
 class PlayState extends FlxState
@@ -13,9 +15,12 @@ class PlayState extends FlxState
 	public var DEBUG_TEXT:FlxText;
 	public var DEBUG_MODE:Bool = false;
 
+	public var PLAYER:FlxSprite;
+
 	override public function create()
 	{
 		initalizeDebugObjects();
+		initalizeGameplayObjects();
 
 		super.create();
 	}
@@ -36,6 +41,19 @@ class PlayState extends FlxState
 			TPS = TICK - originalTick;
 			TPS_Timer();
 		});
+	}
+
+	public function initalizeGameplayObjects()
+	{
+		PLAYER = new FlxSprite(0,0);
+		
+		// this is temporary
+		PLAYER.makeGraphic(64, 128, FlxColor.GREEN);
+
+		PLAYER.screenCenter();
+		PLAYER.y += PLAYER.height / 2;
+
+		add(PLAYER);
 	}
 
 	override public function update(elapsed:Float)
