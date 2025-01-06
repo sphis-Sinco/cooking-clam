@@ -35,7 +35,7 @@ class PlayState extends FlxState
 
 	public function initalizeDebugObjects()
 	{
-		DEBUG_TEXT = new FlxText(8,8,0,"", 16);
+		DEBUG_TEXT = new FlxText(8, 8, 0, "", 16);
 		DEBUG_TEXT.visible = DEBUG_MODE;
 		add(DEBUG_TEXT);
 
@@ -45,7 +45,8 @@ class PlayState extends FlxState
 	public function TPS_Timer()
 	{
 		var originalTick:Int = TICK;
-		FlxTimer.wait(1, () -> {
+		FlxTimer.wait(1, () ->
+		{
 			TPS = TICK - originalTick;
 			TPS_Timer();
 		});
@@ -53,8 +54,8 @@ class PlayState extends FlxState
 
 	public function initalizeGameplayObjects()
 	{
-		PLAYER = new FlxSprite(0,0);
-		
+		PLAYER = new FlxSprite(0, 0);
+
 		// this is temporary
 		PLAYER.makeGraphic(64, 128, FlxColor.GREEN);
 
@@ -71,34 +72,44 @@ class PlayState extends FlxState
 
 	public function shopfunction()
 	{
-		if (IN_SHOP) return;
+		if (IN_SHOP)
+			return;
 
 		openSubState(new ShopSubState());
 		IN_SHOP = true;
 	}
 
 	public function kitchenFunction()
-		{
-			if (!IN_SHOP) return;
-			
-			closeSubState();
-			IN_SHOP = false;
-		}
+	{
+		if (!IN_SHOP)
+			return;
+
+		closeSubState();
+		IN_SHOP = false;
+	}
 
 	override public function update(elapsed:Float)
+	{
+		tickUpdate();
+
+		super.update(elapsed);
+	}
+
+	public function tickUpdate()
 	{
 		TICK++;
 
 		// !DEBUG_MODE is the opposite of DEBUG_MODE so DEBUG_MODE = !DEBUG_MODE will flip the value
-		if (FlxG.keys.justReleased.F3) DEBUG_MODE = !DEBUG_MODE;
+		if (FlxG.keys.justReleased.F3)
+			DEBUG_MODE = !DEBUG_MODE;
 
 		// DEBUG_MODE is basically the toggle for DEBUG_TEXT's visibility
 		// put it below "keys.justReleased.F3" incase DEBUG_MODE got swapped
-		if (DEBUG_TEXT.visible != DEBUG_MODE) DEBUG_TEXT.visible = DEBUG_MODE;
+		if (DEBUG_TEXT.visible != DEBUG_MODE)
+			DEBUG_TEXT.visible = DEBUG_MODE;
 
 		// should not update it if it's not visible
-		if (DEBUG_TEXT.visible) DEBUG_TEXT.text = 'TICK: $TICK\nTPS: $TPS';
-
-		super.update(elapsed);
+		if (DEBUG_TEXT.visible)
+			DEBUG_TEXT.text = 'TICK: $TICK\nTPS: $TPS';
 	}
 }
